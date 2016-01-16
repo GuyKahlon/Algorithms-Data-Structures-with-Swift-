@@ -171,10 +171,11 @@ red, white, blue.
 Each time you can swap two balls.
 
 Example:
-Input:
+Input: <br />
+
   [🔵, 🔵, 🔵, 🔵, ⚪️, 🔵, 🔵, 🔴]
 
-output:
+output: <br />
   [🔴, ⚪️, 🔵, 🔵, 🔵, 🔵, 🔵, 🔵]
   
 
@@ -222,15 +223,12 @@ func <(x: Ball, y: Ball) -> Bool {
 }
 
 func DutchNationalFlag(inout array: [Ball]) {
-  
   DutchNationalFlagHelprt(&array, left: 0, right: array.count - 1)
 }
 
 func DutchNationalFlagHelprt(inout balls:[Ball], left: Int, right: Int) {
   
-  print(balls)
   let p = balls.Partition(left: left, right: right)
-  print(balls)
   switch balls[p] {
   case .Red:
     balls.Partition(left: p+1, right: right)
@@ -239,7 +237,6 @@ func DutchNationalFlagHelprt(inout balls:[Ball], left: Int, right: Int) {
   case .Blue:
     balls.Partition(left: left, right: p-1)
   }
-  print(balls)
 }
 ```
 
