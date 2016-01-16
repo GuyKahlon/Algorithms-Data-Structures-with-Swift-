@@ -348,3 +348,87 @@ extension LinkedList where T: Equatable {
   }
 }
 ```
+### Stack
+
+Implement Stack with a linked list.
+
+```swift 
+struct Stack<T> {
+  
+  private var linkeList = LinkedList<T>()
+  private var counter: UInt = 0
+  
+  init (elements: T...) {
+    for elemnt in elements {
+      push(elemnt)
+    }
+  }
+  
+  mutating func pop() -> T? {
+    guard let res = linkeList.removeAtIndex(0) else {
+      return nil
+    }
+    counter--
+    return res
+  }
+  
+  func peak() -> T? {
+    return linkeList.objectAtIndex(0)
+  }
+  
+  mutating func push(data: T) {
+    counter++
+    linkeList.appendToHead(data)
+  }
+  
+  var count: UInt {
+    return counter
+  }
+  
+  var isEmpty: Bool {
+    return count == 0 ? true : false
+  }
+}
+```
+
+ A stack which that in addition to Push, Pop and Peak, also has a function Min which returns the minimum element in the stack.
+ Push, pop, Peak and Min all operate in 0(1) time.
+ struct StackWithMin<T: protocol<Comparable, Hashable> > {
+
+```swift 
+  private var stack = Stack<T>()
+  private var minStack = Stack<T>()
+
+  mutating func pop() -> T? {
+    
+    let resElement = stack.pop()
+    
+    if resElement == minStack.peak() {
+      minStack.pop()
+    }
+    
+    return resElement
+  }
+  
+  func peak() -> T? {
+    return stack.peak()
+  }
+  
+  func min() -> T? {
+    return minStack.peak()
+  }
+  
+  mutating func push(data: T) {
+    
+    if let currentMin = minStack.peak() {
+      if data <= currentMin {
+        minStack.push(data)
+      }
+    } else {
+      minStack.push(data)
+    }
+    
+    return stack.push(data)
+  }
+}
+```
