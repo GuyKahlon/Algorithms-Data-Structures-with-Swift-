@@ -92,7 +92,7 @@ extension Array where Element: Comparable {
 
 ### 3 partition problem
 
-1. Given an input integer array and 3 boolean functions: isLow(int input), isMedium(int input), isHigh(int input).
+* Given an input integer array and 3 boolean functions: isLow(int input), isMedium(int input), isHigh(int input).
 Write a function that returns an array such that all the low numbers in the input array are sorted before all the medium numbers in the input array, which come before all the high numbers in the array.
 
 You can assume that someone has written functions for you like:
@@ -165,7 +165,7 @@ func Tripartition(inout array: [Int]) {
 }
 ```
 
-2. Given n color balls, each ball has one of three colors: red, blue or white. 
+* Given n color balls, each ball has one of three colors: red, blue or white. 
 These balls are randomly arranged in a line. Design an algorithm to rearrange the balls so that ball colors are in order: 
 red, white, blue. 
 Each time you can swap two balls.
