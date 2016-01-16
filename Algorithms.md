@@ -170,9 +170,8 @@ These balls are randomly arranged in a line. Design an algorithm to rearrange th
 red, white, blue. 
 Each time you can swap two balls.
 
-Example:
+Example: <br />
 Input: <br />
-
   [🔵, 🔵, 🔵, 🔵, ⚪️, 🔵, 🔵, 🔴]
 
 output: <br />
