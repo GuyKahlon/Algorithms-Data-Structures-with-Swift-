@@ -354,17 +354,19 @@ Implement Stack with a linked list.
 
 ```swift 
 struct Stack<T> {
+ 
+  typealias Element = T
   
-  private var linkeList = LinkedList<T>()
+  private var linkeList = LinkedList<Element>()
   private var counter: UInt = 0
   
-  init (elements: T...) {
+  init (elements: Element...) {
     for elemnt in elements {
       push(elemnt)
     }
   }
   
-  mutating func pop() -> T? {
+  mutating func pop() -> Element? {
     guard let res = linkeList.removeAtIndex(0) else {
       return nil
     }
@@ -372,11 +374,11 @@ struct Stack<T> {
     return res
   }
   
-  func peak() -> T? {
+  func peak() -> Element? {
     return linkeList.objectAtIndex(0)
   }
   
-  mutating func push(data: T) {
+  mutating func push(data: Element) {
     counter++
     linkeList.appendToHead(data)
   }
@@ -389,6 +391,7 @@ struct Stack<T> {
     return count == 0 ? true : false
   }
 }
+
 ```
 
  A stack which that in addition to Push, Pop and Peak, also has a function Min which returns the minimum element in the stack.
@@ -396,10 +399,14 @@ struct Stack<T> {
  struct StackWithMin<T: protocol<Comparable, Hashable> > {
 
 ```swift 
-  private var stack = Stack<T>()
-  private var minStack = Stack<T>()
 
-  mutating func pop() -> T? {
+struct StackWithMin<T: protocol<Comparable, Hashable> > {
+  
+  typealias Element = T
+  private var stack = Stack<Element>()
+  private var minStack = Stack<Element>()
+
+  mutating func pop() -> Element? {
     
     let resElement = stack.pop()
     
@@ -410,15 +417,15 @@ struct Stack<T> {
     return resElement
   }
   
-  func peak() -> T? {
+  func peak() -> Element? {
     return stack.peak()
   }
   
-  func min() -> T? {
+  func min() -> Element? {
     return minStack.peak()
   }
   
-  mutating func push(data: T) {
+  mutating func push(data: Element) {
     
     if let currentMin = minStack.peak() {
       if data <= currentMin {
