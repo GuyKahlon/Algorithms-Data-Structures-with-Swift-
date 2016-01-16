@@ -254,3 +254,97 @@ Iterative:
     return counter
   }
   ```
+  
+Delete element from a Linked List (Remove all the elements that equals to the input element)
+
+```swift 
+extension LinkedList where T: Equatable {
+  
+  mutating func delete(data: Element) {
+    
+    while let current = head where current.data == data {
+      head = current.next
+    }
+    
+    var pre = head
+    var runner = head?.next
+    
+    while runner != nil {
+      if runner!.data == data {
+        pre!.next = runner!.next
+      } else {
+        pre = runner
+      }
+      
+      runner = runner!.next
+    }
+  }
+}
+```
+
+Remove duplicates from a linked list
+```swift 
+  /**
+   In order to remove duplicates from a linked list, we should to be able to track duplicates.
+   A simple dictionary will work great here.
+   
+   This function, simply itrate through the linked list, adding each element to the dictionary, When we discover a duplicate element, we remove the element and continue iterating.
+   We do this all in one pass since we are using a linked list.
+   
+   Time complexity
+   This function takes O(N) time, where N is the number or elements in the linked list.
+   
+   Space complexity
+   This function takes O (N) space, In the worst case scenario we iterate through a linked list without duplicates, and we will insert all the linked list elements to the Dictionary.
+   
+   
+   Note: Insert and chaek opration in Dictionary take O(1)
+   
+   */
+  func removeDuplicates() {
+    
+    var cacheDictionary = Dictionary<T, Bool>()
+    
+    var runner = head
+    var pre: LinkedListNode<T>?
+    
+    while let current = runner {
+      if let isExist = cacheDictionary[current.data] where isExist == true {
+        pre?.next = current.next
+      } else {
+        cacheDictionary[current.data] = true
+        pre = current
+      }
+      runner = current.next
+    }
+  }
+```
+
+Remove duplicates from a linked list without additional space
+
+```swift 
+extension LinkedList where T: Equatable {
+
+  func removeDuplicatesWithoutBuffer() {
+    
+    guard var current: LinkedListNode<T>? = head else {
+      return
+    }
+    
+    while let currentElement = current {
+      
+      var runner = currentElement
+      
+      while let nextElement = runner.next {
+        if runner.next?.data == currentElement.data {
+          runner.next = nextElement.next
+        } else {
+          runner = nextElement
+        }
+      }
+      
+      current = currentElement.next
+    }
+  }
+}
+```
