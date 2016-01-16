@@ -2,7 +2,7 @@
 
 Swift 2.1 required
 
-
+[Algorithms](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/edit/master/Algorithms.md)
 ### Linked List
 
 ```swift
@@ -778,4 +778,23 @@ extension Tree {
   }
 }
 ```
-
+  
+  Tree height
+  
+  ```swift
+  var height: Int {
+    return max(getHeight(root.left), getHeight(root.right)) + 1
+  }
+  
+  private func getHeight(node: TreeNode<T>?) -> Int {
+    
+    guard let node = node else {
+      return 0
+    }
+    
+    let leftSubtreeHight = getHeight(node.left)
+    let rightSubtreeHight = getHeight(node.right)
+    
+    return max(leftSubtreeHight, rightSubtreeHight) + 1
+  }
+  ```
