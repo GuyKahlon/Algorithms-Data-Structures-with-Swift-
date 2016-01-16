@@ -93,32 +93,33 @@ extension Array where Element: Comparable {
 3 partition problem
 ---------------------
 
-### Given an input integer array and 3 boolean functions: isLow(int input), isMedium(int input), isHigh(int input). Write a function that returns an array such that all the low numbers in the input array are sorted before all the medium numbers in the input array, which come before all the high numbers in the array.
+### Given an input integer array and 3 boolean functions: isLow(), isMedium(), isHigh().<br /> 
+Write a function that returns an array such that all the low numbers in the input array are sorted before all the medium numbers in the input array, which come before all the high numbers in the array.
 
-You can assume that someone has written functions for you like:
 
-func isLow(int input) -> Bool
-func boolean isMedium(int input) -> Bool
-func boolean isHigh(int input) -> Bool
-
+You can assume that someone has written functions for you like:<br />
+func isLow(int input) -> Bool<br />
+func boolean isMedium(int input) -> Bool<br />
+func boolean isHigh(int input) -> Bool<br />
+<br />
 You can also assume that every int will fall into one (and only one) of these categories.
 
-For example:
+For example:<br />
 
-[5, 100, 500, 4, 105, 408, -9, 812]
+[5, 100, 500, 4, 105, 408, -9, 812]<br />
 
-Low: <100
-Medium: 101-300
-High: >300
+Low: <100<br />
+Medium: 101-300<br />
+High: >300<br />
 
-input: 
-[4, 5, -9, 100, 105, 408, 819, 500] 
-or
-[4, 5, -9, 100, 105, 500, 819, 408] 
-or
-etc.
+input: <br />
+[4, 5, -9, 100, 105, 408, 819, 500] <br />
+or<br />
+[4, 5, -9, 100, 105, 500, 819, 408]<br /> 
+or<br />
+etc.<br />
 
-Solve this in linear time and linear space.
+Solve this in linear time and linear space.<br />
 
 
 Solution:
