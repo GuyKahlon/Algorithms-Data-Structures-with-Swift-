@@ -238,8 +238,181 @@ func DutchNationalFlagHelprt(inout balls:[Ball], left: Int, right: Int) {
 ```
 
 
+###Given a set of distinct integers, S, return all possible subsets. 
+ 
+ Note: Elements in a subset must be in non-descending order. 
+ The solution set must not contain duplicate subsets.
+ 
+ For example:
+ 
+ Input:  [1,2,3]
+ 
+ Output: [[3], [1], [2], [1,2,3], [1,3], [2,3], [1,2], [] ]
+ 
+```swift
+func Subsets(s: [Int])-> [[Int]] {
+  
+  var sortedSet = s
+  
+  sortedSet.quickSort()
+  
+  var result = [[Int]]()
+  
+  for item: Int in sortedSet {
+    
+    var temp = [[Int]]()
+    
+    for subset in result {
+      temp.append(subset + [item])
+    }
+    
+    temp.append([item])
+    
+    result += temp
+  }
+  
+  result.append([Int]())
+  
+  return result
+}
+```
 
-###Given a sequence of words, print all anagrams together.
+
+###Given a Dictionary which as data like:
+  { 
+  '1' : 'A',
+  '2' : 'B',
+  '3' : 'C',
+  ......
+  '26' : 'Z'
+  }
+
+  Input will be an integer, return all possible combination of values from the dictionary<br /> 
+  
+  Example:<br /> 
+
+  Input:  5918<br /> 
+  Output: ["EIAH", "EIR"] <br /> 
+
+  EIAH is from 5 9 1 8    <br /> 
+  EIR is from 5 9 18      <br /> 
+  
+```swift
+var Map : [ Int: Character] = [
+  1: "A",
+  2: "B",
+  3: "C",
+  4: "D",
+  5: "E",
+  6: "F",
+  7: "G",
+  8: "H",
+  9: "I",
+  10: "J",
+  11: "K",
+  12: "L",
+  13: "M",
+  14: "N",
+  15: "O",
+  16: "P",
+  17: "Q",
+  18: "R",
+  19: "S",
+  20: "T",
+  21: "U",
+  22: "V",
+  23: "W",
+  24: "X",
+  25: "Y",
+  26: "Z",
+]
+
+
+func allStrings(str: String) -> [String] {
+  
+  var stringBuilder = String()
+  var result = [String]()
+  allStringsHelper(str, start: 0, stringBuilder: &stringBuilder, result: &result);
+  
+  return result
+}
+
+func allStringsHelper(str: String, start: Int, inout stringBuilder: String, inout result: [String]) {
+  
+  if start >= str.characters.count {
+    result.append(stringBuilder)
+    return
+  }
+  
+  let currentNum = Int(String(str[start]))!
+  let mapedChar = Map[currentNum]!
+  stringBuilder.append(mapedChar)
+  
+  allStringsHelper(str, start: start + 1, stringBuilder: &stringBuilder, result: &result)
+  
+  //Remove the last char from string builder
+  stringBuilder.removeAtIndex(stringBuilder.endIndex.predecessor())
+  
+  if start < str.characters.count - 1 {
+    let character = str[start]
+    let characterNext = str[start+1]
+    let numStr = String(character) + String(characterNext)
+    if let num = Int(numStr) where num <= 26 {
+      let c = Map[num]!
+      stringBuilder.append(c)
+      allStringsHelper(str, start: start + 2, stringBuilder: &stringBuilder, result: &result)
+      stringBuilder.removeAtIndex(stringBuilder.endIndex.predecessor())
+    }
+  }
+}
+```
+
+
+
+###Given a dictionary based simple password, create all possible (special character) passwords based on a provided mapping.
+ 
+ Input: face
+ Map: { a -> @, 4, A}
+ 
+ Output: f@ce, f4ce, fAce
+ 
+ For more details please visit: http://buttercola.blogspot.co.il/2014/11/facebook-password-combination.html
+ 
+```swift 
+func generatePasswords(str: String , dict: [Character: String]) -> [String] {
+  
+  var stringBuilder = String()
+  var result = [String]()
+  passwordHelper(str, start: 0, stringBuilder: &stringBuilder, dict: dict, result: &result);
+  
+  return result
+}
+
+func passwordHelper(str: String, start: Int, inout stringBuilder: String, dict: [Character: String], inout result: [String]) {
+  
+  if start >= str.characters.count {
+    if str != stringBuilder {
+      result.append(stringBuilder)
+    }
+    return
+  }
+  
+  let character = str[start]
+  if let mapString = dict[character] {
+    for newChar in mapString.characters {
+      stringBuilder.append(newChar)
+      passwordHelper(str, start: start + 1, stringBuilder: &stringBuilder, dict: dict, result: &result)
+      stringBuilder.removeAtIndex(stringBuilder.endIndex.predecessor())
+    }
+  } else  {
+    stringBuilder.append(character)
+    passwordHelper(str, start: start + 1, stringBuilder: &stringBuilder, dict: dict, result: &result)
+    stringBuilder.removeAtIndex(stringBuilder.endIndex.predecessor())
+  }
+}
+```
+
+### Given a sequence of words, print all anagrams together.
 
 ```swift
 extension SequenceType where Generator.Element == String {
