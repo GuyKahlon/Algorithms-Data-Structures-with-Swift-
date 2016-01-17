@@ -613,3 +613,213 @@ extension String {
 }
 ```
   
+###Given an integer array numbers and you have to return a new counts array, The counts array has the property where counts[i] is the number of smaller elements to the right of nums[i].
+ 
+  Given numbers = [5, 2, 6, 1]
+ 
+  To the right of 5 there are 2 smaller elements (2 and 1).
+  To the right of 2 there is only 1 smaller element (1).
+  To the right of 6 there is 1 smaller element (1).
+  To the right of 1 there is 0 smaller element.
+ 
+ 
+  Return the array [2, 1, 1, 0].
+
+
+```swift
+func counterSamller(numbers: [Int]) -> [Int] {
+  
+  var result = [Int]()
+  
+  var sorted = [Int](count: numbers.count, repeatedValue: Int.max)
+  
+  for i in (0..<numbers.count).reverse() {
+    let index = findIndexForNewElementInSortedArray(sorted, val: numbers[i])
+    result.append(index)
+    sorted.insert(numbers[i], atIndex: index)
+  }
+  
+  return result.reverse()
+}
+
+func findIndexForNewElementInSortedArray(sorted: [Int], val: Int) -> Int {
+  
+  var left = 0
+  var right = sorted.count - 1
+  
+  while left <= right {
+    var mid = (left + right) / 2
+    if sorted[mid] == val {
+      while mid - 1 >= 0 && sorted[mid - 1] == val {
+        mid--
+      }
+      return mid
+    } else if sorted[mid] < val {
+      left = mid + 1
+    } else {
+      right = mid - 1
+    }
+  }
+  return left
+}
+```
+
+
+###Add two bit strings. Given two bit sequences as strings, write a function to return the addition of the two sequences. Bit strings can be of different lengths also.
+ 
+For example:
+Input: string 1 is “1100011” and second string 2 is “10”
+Output: then the function should return “1100101”.
+
+```swift
+func add2BinaryNumbers(num1: String, num2: String) -> String {
+  
+  var result = String()
+  
+  var index1 = num1.characters.count - 1
+  var index2 = num2.characters.count - 1
+  
+  let charZero:Character = "0"
+  
+  var carry: UInt32 = 0
+  
+  while index1 >= 0 || index2 >= 0 {
+    
+    var bit1: UInt32 = 0
+    if index1 >= 0 {
+      bit1 = num1[index1].asciiValue! - (charZero.asciiValue)!
+    }
+    
+    var bit2: UInt32 = 0
+    if index2 >= 0 {
+      bit2 = num2[index2].asciiValue! - charZero.asciiValue!
+    }
+    
+    var sum = bit1 + bit2 + carry
+    if sum == 3 {
+      sum = 1
+      carry = 1
+    } else if sum == 2 {
+      sum = 0
+      carry = 1
+    } else {
+      carry = 0
+    }
+    
+    result += "\(sum)"
+    
+    index1--
+    index2--
+  }
+  
+  if carry == 1 {
+    result += "\(1)"
+  }
+  
+  return String(result.characters.reverse())
+}
+```
+
+
+###Given two strings, return true if they are one edit away from each other,else return false. An edit is insert/replace/delete a character.
+ 
+ Examples:
+ {"abc","ab"}  -> true
+ {"abc","adc"} -> true
+ {"abc","cab"} -> false
+
+```swift
+func isOneEdit(str1: String, str2: String) -> Bool {
+  
+  //The length difference between two input strings should not be more than 1.
+  let diff = abs(str1.characters.count - str2.characters.count)
+  if diff > 1 {
+    return false
+  }
+  
+  //When the length of the strings is same, the number of different chars should not be more than 1.
+  if diff == 0 {
+    var numberOfEdits = 0
+    for (char1, char2) in zip(str1.characters, str2.characters) {
+      if char1 != char2 {
+        numberOfEdits++
+      }
+    }
+    return numberOfEdits < 2
+  }
+  
+  //If the length difference is 1.
+  //then either one char can be inserted in the short string or deleted from the longer string.
+  //Considering that, the number of different char should not be more than 1.
+  return str1.rangeOfString(str2) != nil || str2.rangeOfString(str1) != nil
+  //return str1.isSubstring(str2) || str2.isSubstring(str1)
+}
+
+
+extension String {
+  
+  func isSubstring(str: String) -> Bool {
+    
+    if str.characters.count == 0 {
+      return true
+    }
+    
+    let firstChar = str[0]
+    
+    for (index, character) in characters.enumerate() {
+      if firstChar == character {
+        
+        var originIndex = index
+        
+        var flag = true
+        for i in 0..<str.characters.count where flag {
+          if originIndex >= characters.count {
+            return false
+          }
+          
+          if str[i] != self[originIndex]{
+            flag = false
+            break
+          } else {
+            originIndex++
+          }
+        }
+        if flag {
+          return true
+        }
+      }
+    }
+    
+    return false
+  }
+}
+```
+
+###Find non repeating element -Given an array consisting of 2n+1 elements. n elements in it are married, i.e they occur twice in the array, however there is one element which only appears once in the array. I need to find that number in a single pass using constant memory. {assume all are positive numbers}
+ Eg :- 3 4 1 3 1 7 2 2 4
+ Ans:- 7
+
+```swift
+func findNonRepeatingElement(array: [Int]) -> Int {
+  
+  var element = 0;
+  
+  for item in array {
+    element ^= item
+  }
+  return element;
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
