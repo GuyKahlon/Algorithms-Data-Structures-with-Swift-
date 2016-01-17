@@ -90,7 +90,7 @@ extension Array where Element: Comparable {
 ```
 
 
-3 partition problem
+3-Partition Problems
 ---------------------
 
 ### Given an input integer array and 3 boolean functions: isLow(), isMedium(), isHigh().<br /> 
@@ -234,6 +234,161 @@ func DutchNationalFlagHelprt(inout balls:[Ball], left: Int, right: Int) {
   case .Blue:
     balls.Partition(left: left, right: p-1)
   }
+}
+```
+
+
+###Given an array containing just 0s and 1s sort it in place in one pass.
+
+```swift
+func sortBinaryArray(inout array:[Int]) {
+  
+  let end = array.count - 1
+  let pivot = array[end]
+  var partition = 0
+  
+  for index in 0..<end {
+    if array[index] <= pivot {
+      if index != partition {
+        swap(&array[index], &array[partition])
+      }
+      partition++
+    }
+  }
+  
+  if partition != end {
+    swap(&array[end], &array[partition])
+  }
+}
+```
+
+
+3SUM Problems
+---------------------
+###Given a sorted array of integers and number k. The function return true if there are 2 numbers a and b in the array so that the a + b = k
+
+```swift 
+func findTargetSum(array: [Int], var leftIndex:Int, var rightIndex: Int, k: Int) -> Bool {
+  
+  while leftIndex < rightIndex {
+    let leftValue = array[leftIndex]
+    let rightValue = array[rightIndex]
+    
+    let sum = leftValue + rightValue
+    
+    switch sum {
+    case let sum where sum == k:
+      return true
+    case let sum where sum > k:
+      rightIndex--
+    case let sum where sum < k:
+      leftIndex++
+    default:
+      print("Error")
+    }
+  }
+  
+  return false
+}
+```
+
+
+###Check if an array of integers contains two elements that sum to a third element in the array.
+
+Solution:<br />
+Actually we just need to check if there are triplet the the sum is equal to zero.<br />
+And with binary search we can do it efficiently<br />
+
+```swift
+func findTriplet(array: [Int]) -> Bool {
+  
+  var sortArray = array
+  sortArray.quickSort()
+  
+  for index in 0..<sortArray.count {
+    if findsum(sortArray, leftIndex: 0, rightIndex: sortArray.count - 1, k: sortArray[index], jumpIndex: index) {
+      return true
+    }
+  }
+  
+  return false
+}
+
+func findsum(array: [Int], var leftIndex:Int, var rightIndex: Int, k: Int, jumpIndex: Int) -> Bool {
+  
+  if rightIndex == jumpIndex {
+    rightIndex--
+  }
+  
+  if leftIndex == jumpIndex {
+    leftIndex++
+  }
+  
+  while leftIndex < rightIndex {
+    
+    let leftValue = array[leftIndex]
+    let rightValue = array[rightIndex]
+    
+    let sum = leftValue + rightValue
+    
+    switch sum {
+    case let sum where sum == -k:
+      print("Triplet is \(array[leftIndex]), \(array[rightIndex]), \(array[jumpIndex])")
+      return true
+    case let sum where sum > k:
+      rightIndex--
+      if rightIndex == jumpIndex {
+        rightIndex--
+      }
+    case let sum where sum < k:
+      leftIndex++
+      if leftIndex == jumpIndex {
+        leftIndex++
+      }
+    default:
+      print("Error")
+    }
+  }
+  
+  return false
+}
+```
+
+###3Sum Smaller, Given an array of n integers numbers and a target, find the number of index triplets i, j, k with 0 <= i < j < k < n that satisfy the condition nums[i] + nums[j] + nums[k] < target.
+ 
+For example:
+Input:  nums = [-2, 0, 1, 3], and target = 2.
+Output: Return 2. 
+
+Because there are two triplets which sums are less than 2:
+
+[-2, 0, 1]
+[-2, 0, 3]
+
+```swift
+func threeSumSmaller(array: [Int], target: Int) -> Int {
+  
+  var counter = 0
+  
+  var sortedArray = array
+  sortedArray.quickSort()
+  
+  for i in 0..<(sortedArray.count - 2) {
+    
+    var j = i + 1
+    var k = array.count - 1
+    
+    while j < k {
+      if sortedArray[i] + sortedArray[j] + sortedArray[k] < target {
+        counter += (k-j)
+        j++
+      } else {
+        k--
+      }
+    }
+  }
+  
+  return counter
 }
 ```
 
