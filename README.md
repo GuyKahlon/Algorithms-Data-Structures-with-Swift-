@@ -2,7 +2,7 @@
 
 Swift 2.1 required
 
-[Algorithms](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/edit/master/Algorithms)
+[Algorithms](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/edit/master/Algorithms.md)
 ### Linked List
 
 ```swift
