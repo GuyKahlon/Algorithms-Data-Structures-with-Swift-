@@ -40,3 +40,52 @@ struct Graph<T: Equatable> {
 }
 
 ```
+
+Basic Graph traversals
+```swift
+  func depthFirstSearch() {
+    DFSHelper(root)
+  }
+  
+  private func DFSHelper(node: GraphNode<Element>?) {
+    guard let node = node else {
+      return
+    }
+    
+    visit(node)
+    node.visited = true
+    
+    for adj in node.adjacent {
+      if adj.visited == false {
+        DFSHelper(adj)
+      }
+    }
+  }
+
+  func breadtFirstSearch() {
+    
+    var queue = Queue<GraphNode<Element>>()
+    
+    visit(root)
+    root.visited = true
+    queue.enQueue(root)
+    
+    while !queue.isEmpty {
+      let currentNode = queue.deQueue()!
+      for adj in currentNode.adjacent {
+        if adj.visited == false {
+          visit(adj)
+          adj.visited = true
+          queue.enQueue(adj)
+        }
+      }
+    }
+  }
+  
+  private func visit(node: GraphNode<Element>) {
+    print("\(node.data)")
+  }
+  
+```
+
+
