@@ -3,7 +3,11 @@
 Swift 2.1 required
 
 [Algorithms](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/Algorithms.md)
+
+[Graph](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/Graph.md)
+
 ### Linked List
+
 
 ```swift
 private class LinkedListNode<T> {
