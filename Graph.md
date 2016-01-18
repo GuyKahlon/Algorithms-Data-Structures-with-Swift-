@@ -37,10 +37,6 @@ struct Graph<T: Equatable> {
   func addAdjacent(graph: Graph<Element>) {
     root.adjacent.append(graph.root)
   }
-  
-  func depthFirstSearch() {
-    DFSHelper(root)
-  }
 }
 
 ```
