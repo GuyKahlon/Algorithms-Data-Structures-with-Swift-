@@ -1,4 +1,4 @@
-# Algorithms Data Structures With Swift
+# Algorithms & Data Structures With Swift
 
 Swift 2.1 required
 
