@@ -796,8 +796,10 @@ extension String {
 ```
 
 ###Find non repeating element -Given an array consisting of 2n+1 elements. n elements in it are married, i.e they occur twice in the array, however there is one element which only appears once in the array. I need to find that number in a single pass using constant memory. {assume all are positive numbers}
- Eg :- 3 4 1 3 1 7 2 2 4
- Ans:- 7
+ 
+Eg :- 3 4 1 3 1 7 2 2 4
+ 
+Ans:- 7
 
 ```swift
 func findNonRepeatingElement(array: [Int]) -> Int {
@@ -812,10 +814,277 @@ func findNonRepeatingElement(array: [Int]) -> Int {
 ```
 
 
+Union-Find Problems
+---------------------
+###Number of Islands II<br /> 
+A 2d grid map of m rows and n columns is initially filled with water. We may perform an addLand operation which turns the water at position (row, col) into a land. Given a list of positions to operate, count the number of islands after each addLand operation. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.<br /> 
+Example:<br /> 
+Given m = 3, n = 3, positions = [[0,0], [0,1], [1,2], [2,1]].<br /> 
+Initially, the 2d grid grid is filled with water. (Assume 0 represents water and 1 represents land).<br /> 
+
+0 0 0<br /> 
+0 0 0<br /> 
+0 0 0<br /> 
+<br /> 
+1 1 0<br />
+0 0 1<br /> 
+0 1 0<br /> 
+
+We return the result as an array: [1, 1, 2, 3]
+do it in time complexity O(k log mn), where k is the length of the positions.
+
+
+Explanation about the answer algorithm
+https://www.youtube.com/watch?v=UBY4sF86KEY
+
+```swift
+struct Point: Hashable {
+  
+  let x: Int
+  let y: Int
+  
+  var hashValue: Int {
+    return x*y + (x+y)
+  }
+}
+
+func ==(lhs: Point, rhs: Point) -> Bool {
+  return lhs.x == rhs.x && lhs.y == rhs.y
+}
+
+func numIsland(n: Int, m: Int, operations: [Point]) -> [Int] {
+  
+  var result = [Int]()
+  
+  var parent = [Point: Point]()
+  var counter = 0
+  
+  func createNewIsalnd(point: Point) {
+    parent[point] = point
+  }
+  
+  func getAdjacent(point: Point) -> [Point] {
+    var adjacent = [Point]()
+    
+    //Top
+    if point.x-1 >= 0 {
+      adjacent.append(Point(x: point.x-1, y: point.y))
+    }
+    
+    //Right
+    if point.y+1 < m {
+      adjacent.append(Point(x: point.x, y: point.y+1))
+    }
+    
+    //Buttom
+    if point.x+1 < n  {
+      adjacent.append(Point(x: point.x+1, y: point.y))
+    }
+    
+    //Left
+    if point.y-1 < n {
+      adjacent.append(Point(x: point.x, y: point.y-1))
+    }
+    
+    return adjacent
+  }
+  
+  func find(point: Point) -> Point? {
+    
+    guard let p = parent[point] else {
+      return nil
+    }
+    
+    var root: Point? = p
+    
+    while let par = parent[p] where par != root {
+      root = par
+    }
+    
+    return root
+  }
+  
+  func union(root1: Point, root2: Point) {
+    parent[root1] = root2
+  }
+  
+  var islands = Matrix<Float>(rows: n, columns: m, repeatedValue: 0)
+  
+  for p in operations {
+    
+    if islands[p.x, p.y] == 0 {
+      
+      islands[p.x, p.y] = 1
+      createNewIsalnd(p)
+      counter++
+      
+      for adj in getAdjacent(p) {
+        if let root = find(adj) {
+          if root != p {
+            counter--
+            union(root, root2: p)
+          }
+        }
+      }
+      result.append(counter)
+    }
+  }
+  
+
+  return result
+}
+```
 
 
 
+###Min Distance between two nodes
 
+Given a 2D m*n board, 0 means an empty space we can pass, and 1 means it is a block we cannot pass.
+Give a starting and ending point, find out the min distance we can walk from one point to another. We can move up, down, left and right.<br />
+
+Return the min distance between two nodes. If we can never reach, return -1.<br />
+ 
+ For example:<br />
+ 0 0 0 0<br />
+ S 0 0 0<br />
+ 0 0 0 E<br />
+ 
+ return 4<br />
+ 
+ 0 0 0 0<br />
+ S 1 1 0<br />
+ 0 0 1 E<br />
+ 
+ return 6.s<br />
+
+ 
+ Understand the problem:<br />
+ Use BFS, traverse the matrix layer by layer, until we reach the ending point.<br />
+ 
+ ```swift
+func findMinPath(matrix: Matrix<Float>, start: Point, end: Point) -> Int {
+  
+  
+  func getAdjacent(p: Point) -> [Point]{
+    
+    var adjacent = [Point]()
+    //Up
+    if p.x - 1 >= 0 && matrix[p.x-1, p.y] != 1.0 {
+      adjacent.append(Point(x:p.x-1, y: p.y))
+    }
+    
+    //Left
+    if p.y+1 < matrix.columns && matrix[p.x, p.y+1] != 1.0{
+      adjacent.append(Point(x:p.x, y: p.y+1))
+    }
+    
+    //Down
+    if p.x+1 < matrix.rows && matrix[p.x+1, p.y] != 1.0{
+      adjacent.append(Point(x:p.x+1, y: p.y))
+    }
+    
+    //Right
+    if p.y-1 >= 0 && matrix[p.x, p.y-1] != 1.0{
+      adjacent.append(Point(x:p.x, y: p.y-1))
+    }
+    
+    return adjacent
+  }
+  
+  
+  var visited = Matrix<Float>(rows: matrix.rows, columns:matrix.columns, repeatedValue: 0.0)
+  var queue = Queue<(point: Point, level: Int)>()
+  queue.enQueue((start, 0))
+  
+  while !queue.isEmpty {
+    
+    let current = queue.deQueue()!
+    if current.point == end {
+      return current.level
+    }
+    visited[current.point.x, current.point.y] = 1.0
+    
+    for adj in getAdjacent(current.point) {
+      if visited[adj.x, adj.y] == 0.0 {
+        queue.enQueue((adj, current.level + 1))
+      }
+    }
+  }
+  
+  
+  return -1
+}
+```
+
+###Smallest Rectangle Enclosing Black Pixels<br />
+An image is represented by a binary matrix with 0 as a white pixel and 1 as a black pixel. The black pixels are connected, i.e., there is only one black region. Pixels are connected horizontally and vertically. Given the location (x, y) of one of the black pixels, return the area of the smallest (axis-aligned) rectangle that encloses all black pixels.
+<br />
+For example, given the following image:<br />
+ ["0010",<br />
+  "0110",<br />
+  "0100"]<br />
+ 
+ and x = 0, y = 2.<br />
+ Return 6.<br />
+ DFS Solution:<br />
+ Look for the borders for the black pixels.
+
+```swift
+func smallestRectangleEnclosingBlackPixels(matrix: Matrix<Float>, point: Point) -> Int {
+
+  func getAdjacent(p: Point) -> [Point]{
+    
+    var adjacent = [Point]()
+    //Up
+    if p.x - 1 >= 0 && matrix[p.x-1, p.y] == 1.0 {
+      adjacent.append(Point(x:p.x-1, y: p.y))
+    }
+    
+    //Left
+    if p.y+1 < matrix.columns && matrix[p.x, p.y+1] == 1.0{
+      adjacent.append(Point(x:p.x, y: p.y+1))
+    }
+    
+    //Down
+    if p.x+1 < matrix.rows && matrix[p.x+1, p.y] == 1.0{
+      adjacent.append(Point(x:p.x+1, y: p.y))
+    }
+    
+    //Right
+    if p.y-1 >= 0 && matrix[p.x, p.y-1] == 1.0{
+      adjacent.append(Point(x:p.x, y: p.y-1))
+    }
+    
+    return adjacent
+  }
+
+  var minX = point.x
+  var maxX = point.x
+  var minY = point.y
+  var maxY = point.y
+  
+  var visited = Matrix<Float>(rows: matrix.rows, columns: matrix.columns, repeatedValue: 0.0)
+  
+  func smallestRectangleHelper(point: Point){
+    
+    visited[point.x, point.y] = 1.0
+    
+    minX = min(minX, point.x)
+    maxX = max(maxX, point.x)
+    minY = min(minY, point.y)
+    maxY = max(maxY, point.y)
+    
+    for adj in getAdjacent(point) {
+      if visited[adj.x, adj.y] == 0.0 {
+        smallestRectangleHelper(adj)
+      }
+    }
+  }
+  
+  smallestRectangleHelper(point)
+  return ((maxX - minX) + 1) * ((maxY - minY) + 1)
+}
+```
 
 
 
