@@ -796,8 +796,10 @@ extension String {
 ```
 
 ###Find non repeating element -Given an array consisting of 2n+1 elements. n elements in it are married, i.e they occur twice in the array, however there is one element which only appears once in the array. I need to find that number in a single pass using constant memory. {assume all are positive numbers}
- Eg :- 3 4 1 3 1 7 2 2 4
- Ans:- 7
+ 
+Eg :- 3 4 1 3 1 7 2 2 4
+ 
+Ans:- 7
 
 ```swift
 func findNonRepeatingElement(array: [Int]) -> Int {
@@ -812,11 +814,126 @@ func findNonRepeatingElement(array: [Int]) -> Int {
 ```
 
 
+Union-Find Problems
+---------------------
+###Number of Islands II<br /> 
+A 2d grid map of m rows and n columns is initially filled with water. We may perform an addLand operation which turns the water at position (row, col) into a land. Given a list of positions to operate, count the number of islands after each addLand operation. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.<br /> 
+Example:<br /> 
+Given m = 3, n = 3, positions = [[0,0], [0,1], [1,2], [2,1]].<br /> 
+Initially, the 2d grid grid is filled with water. (Assume 0 represents water and 1 represents land).<br /> 
+
+0 0 0<br /> 
+0 0 0<br /> 
+0 0 0<br /> 
+<br /> 
+1 1 0<br />
+0 0 1<br /> 
+0 1 0<br /> 
+
+We return the result as an array: [1, 1, 2, 3]
+do it in time complexity O(k log mn), where k is the length of the positions.
 
 
+Explanation about the answer algorithm
+https://www.youtube.com/watch?v=UBY4sF86KEY
 
+```swift
+struct Point: Hashable {
+  
+  let x: Int
+  let y: Int
+  
+  var hashValue: Int {
+    return x*y + (x+y)
+  }
+}
 
+func ==(lhs: Point, rhs: Point) -> Bool {
+  return lhs.x == rhs.x && lhs.y == rhs.y
+}
 
+func numIsland(n: Int, m: Int, operations: [Point]) -> [Int] {
+  
+  var result = [Int]()
+  
+  var parent = [Point: Point]()
+  var counter = 0
+  
+  func createNewIsalnd(point: Point) {
+    parent[point] = point
+  }
+  
+  func getAdjacent(point: Point) -> [Point] {
+    var adjacent = [Point]()
+    
+    //Top
+    if point.x-1 >= 0 {
+      adjacent.append(Point(x: point.x-1, y: point.y))
+    }
+    
+    //Right
+    if point.y+1 < m {
+      adjacent.append(Point(x: point.x, y: point.y+1))
+    }
+    
+    //Buttom
+    if point.x+1 < n  {
+      adjacent.append(Point(x: point.x+1, y: point.y))
+    }
+    
+    //Left
+    if point.y-1 < n {
+      adjacent.append(Point(x: point.x, y: point.y-1))
+    }
+    
+    return adjacent
+  }
+  
+  func find(point: Point) -> Point? {
+    
+    guard let p = parent[point] else {
+      return nil
+    }
+    
+    var root: Point? = p
+    
+    while let par = parent[p] where par != root {
+      root = par
+    }
+    
+    return root
+  }
+  
+  func union(root1: Point, root2: Point) {
+    parent[root1] = root2
+  }
+  
+  var islands = Matrix<Float>(rows: n, columns: m, repeatedValue: 0)
+  
+  for p in operations {
+    
+    if islands[p.x, p.y] == 0 {
+      
+      islands[p.x, p.y] = 1
+      createNewIsalnd(p)
+      counter++
+      
+      for adj in getAdjacent(p) {
+        if let root = find(adj) {
+          if root != p {
+            counter--
+            union(root, root2: p)
+          }
+        }
+      }
+      result.append(counter)
+    }
+  }
+  
+
+  return result
+}
+```
 
 
 
