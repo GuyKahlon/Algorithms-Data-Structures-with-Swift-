@@ -4,6 +4,7 @@ Swift 2.1 required
 
 [Algorithms](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/Algorithms.md)
 
+[BinaryTree](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/BinaryTree.md)
 [Graph](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/Graph.md)
 
 ### Linked List
