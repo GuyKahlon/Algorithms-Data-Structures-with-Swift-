@@ -18,3 +18,7 @@ Swift 2.1 required
 ###Algorithms:
 
 [Algorithms](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/Algorithms.md)
+
+[Sorting](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/Sorting.md)
+
+[Partition Problems](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/3:2PartitionProblems.md)
