@@ -2,11 +2,6 @@
 
 Swift 2.1 required
 
-[Sorting](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/Sorting.md)
-
-[Partition Problems](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/3:2PartitionProblems.md)
-
-
 3SUM Problems
 ---------------------
 ###Given a sorted array of integers and number k. The function return true if there are 2 numbers a and b in the array so that the a + b = k
