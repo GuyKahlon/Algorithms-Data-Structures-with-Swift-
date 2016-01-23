@@ -438,14 +438,14 @@ func allStringsHelper(str: String, start: Int, inout stringBuilder: String, inou
 
 
 
-###Given a dictionary based simple password, create all possible (special character) passwords based on a provided mapping.
+###Given a dictionary based simple password, create all possible (special character) passwords based on a provided mapping.<br />
  
- Input: face
- Map: { a -> @, 4, A}
+ Input: face<br />
+ Map: { a -> @, 4, A}<br />
  
- Output: f@ce, f4ce, fAce
+ Output: f@ce, f4ce, fAce<br />
  
- For more details please visit: http://buttercola.blogspot.co.il/2014/11/facebook-password-combination.html
+ For more details please visit: http://buttercola.blogspot.co.il/2014/11/facebook-password-combination.html<br />
  
 ```swift 
 func generatePasswords(str: String , dict: [Character: String]) -> [String] {
@@ -480,6 +480,51 @@ func passwordHelper(str: String, start: Int, inout stringBuilder: String, dict: 
   }
 }
 ```
+
+###Generalized Abbreviation
+Write a function to generate the generalized abbreviations of a word.
+Example:<br />
+Given word = "word", return the following list (order does not matter):<br />
+["word", "1ord", "w1rd", "wo1d", "wor1", "2rd", "w2d", "wo2", "1o1d", "1or1", "w1r1", "1o2", "2r1", "3d", "w3", "4"]<br />
+
+
+```Swift
+func generalizedAbbreviation(str: String) -> [String]{
+  
+  var result = [String]()
+  var sb = String()
+  
+  generalizedAbbreviationHelprt(str, start: 0, sb: &sb, result: &result)
+  return result
+}
+
+func generalizedAbbreviationHelprt(str: String, start: Int, inout sb: String, inout result: [String], isNumber: Bool = false){
+  
+  if start >= str.characters.count {
+    result.append(sb)
+    return
+  }
+  
+  let currentChar = str[start]
+  sb.append(currentChar)
+  
+  generalizedAbbreviationHelprt(str, start: start+1, sb: &sb, result: &result)
+  sb.removeAtIndex(sb.endIndex.predecessor())
+  
+  if isNumber == false {
+    var counter = 1
+    for _ in start..<str.characters.count {
+      sb.append(String(counter)[0])
+      generalizedAbbreviationHelprt(str, start: start+counter, sb: &sb, result: &result, isNumber: true)
+      sb.removeAtIndex(sb.endIndex.predecessor())
+      counter++
+    }
+  }
+}
+```
+
+
+
 
 ### Given a sequence of words, print all anagrams together.
 
