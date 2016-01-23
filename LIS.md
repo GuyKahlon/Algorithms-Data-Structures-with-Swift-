@@ -1,10 +1,9 @@
 # Longest Increasing Subsequence
 
-
 The longest Increasing Subsequence (LIS) problem is to find the length of the longest subsequence of a given sequence such that all elements of the subsequence are sorted in increasing order. 
 For example, length of LIS for { 10, 22, 9, 33, 21, 50, 41, 60, 80 } is 6 and LIS is {10, 22, 33, 50, 60, 80}.
 
-
+```swift
 func LongestIncreasingSubsequence(array: [Int]) -> Int {
   
   var lis = [[Int]](count: array.count, repeatedValue: [Int]())
@@ -34,12 +33,16 @@ func LongestIncreasingSubsequence(array: [Int]) -> Int {
   
   return lis[max].count
 }
+```
 
 
+###Given a string, find the longest substring that contains only two unique characters.<br /> 
+For example:<br />
+given "abcbbbbcccbdddadacb". <br />
+The longest substring that contains 2 unique character is:<br />
+"bcbbbbcccb".<br />
 
-Given a string, find the longest substring that contains only two unique characters. 
-For example, given "abcbbbbcccbdddadacb", the longest substring that contains 2 unique character is "bcbbbbcccb".
-
+```Swift
 func LengthOfLongestSubstringTwoDistinct(s: String) -> Int {
   
   var j = -1
@@ -108,23 +111,24 @@ func maxSubStringKUniqueChars(s: String, k: Int) -> Int {
   maxLen = max(maxLen, s.characters.count - i)
   return maxLen
 }
+```
 
 
 
 
 
+###Given an unsorted array of nonnegative integers, find a continous subarray which adds to a given number.
+Examples:<br />
+Input: arr[] = {1, 4, 20, 3, 10, 5}, sum = 33<br />
+Ouptut: Sum found between indexes 2 and 4<br />
 
-Given an unsorted array of nonnegative integers, find a continous subarray which adds to a given number.
-Examples:
-Input: arr[] = {1, 4, 20, 3, 10, 5}, sum = 33
-Ouptut: Sum found between indexes 2 and 4
+Input: arr[] = {1, 4, 0, 0, 3, 10, 5}, sum = 7<br />
+Ouptut: Sum found between indexes 1 and 4<br />
 
-Input: arr[] = {1, 4, 0, 0, 3, 10, 5}, sum = 7
-Ouptut: Sum found between indexes 1 and 4
+Input: arr[] = {1, 4}, sum = 0<br />
+Output: No subarray found<br />
 
-Input: arr[] = {1, 4}, sum = 0
-Output: No subarray found
-
+```Swift
 func subarraySumToTarget(array: [UInt], target: UInt) -> (start: Int, end: Int)? {
   
   var i: Int = 0
@@ -146,8 +150,7 @@ func subarraySumToTarget(array: [UInt], target: UInt) -> (start: Int, end: Int)?
   
   return nil
 }
-
-
+```
 
 
 
