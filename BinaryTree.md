@@ -305,5 +305,42 @@ extension Tree {
   }
   ```
 
+Lowest Common Ancestor - LCA without parent pointer
+LCA problem with no parent pointers. Given the root of a tree and pointers to two nodes contained in that tree, return the lowest common ancestor of the two nodes.
 
+ ```swift
+extension Tree where T: Equatable {
+ 
+  func lowestCommonAncestor(data1: T, data2: T) -> T? {
+    return lowestCommonAncestorHelper(root, data1: data1, data2: data2)?.data
+  }
+  
+  private func lowestCommonAncestorHelper(node: TreeNode<T>?, data1: T, data2: T) -> TreeNode<T>? {
+    
+    guard let node = node else {
+      return nil
+    }
+    
+    if node.data == data1 || node.data == data2 {
+      return node
+    }
+    
+    let findLeft = lowestCommonAncestorHelper(node.left, data1: data1, data2: data2)
+    let findRight = lowestCommonAncestorHelper(node.right, data1: data1, data2: data2)
+    
+    if let _ = findLeft, let _ = findRight {
+      return node
+    }
+    
+    if let _ = findLeft {
+      return lowestCommonAncestorHelper(node.left, data1: data1, data2: data2)
+    }
+    
+    if let _ = findRight {
+      return lowestCommonAncestorHelper(node.right, data1: data1, data2: data2)
+    }
 
+    return nil
+  }
+}
+```
