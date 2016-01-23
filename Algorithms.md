@@ -34,10 +34,6 @@ func findTargetSum(array: [Int], var leftIndex:Int, var rightIndex: Int, k: Int)
 
 ###Check if an array of integers contains two elements that sum to a third element in the array.
 
-Solution:<br />
-Actually we just need to check if there are triplet the the sum is equal to zero.<br />
-And with binary search we can do it efficiently<br />
-
 ```swift
 func findTriplet(array: [Int]) -> Bool {
   
@@ -71,7 +67,7 @@ func findsum(array: [Int], var leftIndex:Int, var rightIndex: Int, k: Int, jumpI
     let sum = leftValue + rightValue
     
     switch sum {
-    case let sum where sum == -k:
+    case let sum where sum == k:
       print("Triplet is \(array[leftIndex]), \(array[rightIndex]), \(array[jumpIndex])")
       return true
     case let sum where sum > k:
