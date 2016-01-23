@@ -22,3 +22,6 @@ Swift 2.1 required
 [Sorting](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/Sorting.md)
 
 [Partition Problems](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/3:2PartitionProblems.md)
+
+[Longest Increasing Subsequence - LIS](https://github.com/GuyKahlon/Algorithms-Data-Structures-with-Swift-/blob/master/LIS.md)
+
