@@ -890,6 +890,46 @@ func mutate<T>(inout array: [T], var indexes: [Int]) {
   }
 }
 ```
+###Write a Palindrome checking function
+Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.<br />
+For example:<br />
+"A man, a plan, a canal: Panama" is a palindrome.<br />
+"race a car" is not a palindrome.<br />
 
 
-
+```swift
+func isPalindrome(s: String) -> Bool {
+  
+  if s.characters.count < 2 {
+    return true
+  }
+  
+  var left = 0
+  var right = s.characters.count - 1
+  
+  while left < right {
+    
+    if s[left].isLetter == false {
+      left++
+      continue
+    }
+    
+    if s[right].isLetter == false {
+      right--
+      continue
+    }
+    
+    let leftChar = s[left].lowercase
+    let rightChar = s[right].lowercase
+    
+    if leftChar != rightChar {
+      return false
+    }
+    
+    left++
+    right--
+  }
+  
+  return true
+}
+```
