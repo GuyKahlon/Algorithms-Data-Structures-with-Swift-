@@ -873,6 +873,27 @@ func smallestRectangleEnclosingBlackPixels(matrix: Matrix<Float>, point: Point) 
 
 
 
+###Given an input array and another array that describe a new index for each element, mutate the input array so that each element ends up in their new index in-place. Discuss the runtime of the algorithm and how you can be sure there won't be any infinite loops.
+
+
+Understand the problem:<br />
+Input char[] {a, b, c, d}<br />
+int[]    {3, 1, 0, 2}<br />
+
+Suppose the input is valid, i.e, index array does not contain out of boundary elements, or "collision" elements.<br />
+
+Output: char[] {c, b, d, a}<br />
+
+```swift
+func mutate<T>(inout array: [T], var indexes: [Int]) {
+  for i in 0..<array.count {
+    while indexes[i] != i {      
+      swap(&array[i], &array[indexes[i]])
+      swap(&indexes[i], &indexes[indexes[i]])
+    }
+  }
+}
+```
 
 
 
