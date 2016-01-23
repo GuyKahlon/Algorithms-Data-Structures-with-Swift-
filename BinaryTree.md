@@ -344,3 +344,34 @@ extension Tree where T: Equatable {
   }
 }
 ```
+Find the n-th node in a binary tree
+Write a function that takes 2 arguments: a binary tree and an integers, it should return the n-th element in the inorder traversal of the binary tree. 
+
+Very importent is to stop traversing the tree whenever we found the nth node
+
+ ```swift
+  func findElement(nth: Int) -> T? {
+    
+    var num = nth
+    return findElementHelper(root, n: &num)
+  }
+  
+  private func findElementHelper(node: TreeNode<T>?, inout n: Int) -> T? {
+  
+    guard let node = node else {
+      return nil
+    }
+    
+    if let element = findElementHelper(node.left, n: &n) {
+      return element
+    }
+    
+    if n == 0 {
+      return node.data
+    } else {
+      n = n-1
+    }
+    
+    return findElementHelper(node.right, n: &n)
+  }
+  ```
