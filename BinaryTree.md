@@ -411,3 +411,77 @@ Very importent is to stop traversing the tree whenever we found the nth node
     return findElementHelper(node.right, n: &n)
   }
   ```
+
+Tree diameter
+What is Diameter of a Tree: diameter of tree is defined as a longest path or route between any two nodes in a tree.
+The path may or may not for through the ROOT.
+   
+   For example:<br />
+   ```swift
+    /**
+   Diameter = 4
+       [20]
+       /  \
+     [10] [30]
+       \
+      [25]
+
+   Diameter = 7 - The longest path not through the ROOT
+         20
+         /  \
+       [10]  30
+        / \
+      [12][25]
+      /     \
+    [99]   [12]
+      \      \
+     [98]    [1]
+      */
+
+func diameter() -> Int {
+    return diameterHelper(root).Diameter
+  }
+  
+    /**
+   diameterHelperNotVeryEfficien:
+   Time Complexity: Since when calculating the diameter, every iteration for every node, is calculating height of tree separately in which we iterate the tree from top to bottom and when we calculate diameter recursively so its O(N2).
+   
+   */
+  private func diameterHelperNotVeryEfficien(node: TreeNode<T>?) -> Int {
+    
+    guard let node = node else {
+      return 0
+    }
+    
+    let leftHeight  = getHeight(node.left)
+    let rightHeight = getHeight(node.right)
+    
+    let leftDiameter  = diameterHelperNotVeryEfficien(node.left)
+    let rightDiameter = diameterHelperNotVeryEfficien(node.right)
+    
+    return max(leftHeight+rightHeight+1, max(leftDiameter, rightDiameter))
+  }
+  
+   /**
+  Now we will improve it further. If you notice at every node to find the diameter we are calling a separate function to find the height. 
+  We can improve it by finding the height of tree and diameter in the same iteration.
+   */
+   
+  typealias HeightAndDiameter = (Height: Int, Diameter: Int)
+  
+  private func diameterHelper(node: TreeNode<T>?) -> HeightAndDiameter {
+  
+    guard let node = node else {
+      return HeightAndDiameter(Height:0, Diameter:0)
+    }
+  
+    let left  = diameterHelper(node.left)
+    let right = diameterHelper(node.right)
+  
+    let height   = max(left.Height, right.Height) + 1
+    let diameter = max(left.Height + right.Height + 1, max(left.Diameter, right.Diameter))
+  
+    return HeightAndDiameter(Height: height, Diameter: diameter)
+  }
+  
+```  
