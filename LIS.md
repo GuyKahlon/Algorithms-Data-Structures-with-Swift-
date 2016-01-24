@@ -71,7 +71,11 @@ func LengthOfLongestSubstringTwoDistinct(s: String) -> Int {
   maxLen = max(maxLen, s.characters.count - i)
   return maxLen
 }
+```
 
+###Given a string, find the longest substring that contains only two unique characters.
+
+```Swift
 func maxSubStringKUniqueChars(s: String, k: Int) -> Int {
   
   var maxLen = 0
@@ -116,9 +120,6 @@ func maxSubStringKUniqueChars(s: String, k: Int) -> Int {
   return maxLen
 }
 ```
-
-
-
 
 
 ###Given an unsorted array of nonnegative integers, find a continous subarray which adds to a given number.
