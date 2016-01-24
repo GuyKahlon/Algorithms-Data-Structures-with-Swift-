@@ -305,6 +305,42 @@ extension Tree {
   }
   ```
 
+###Check if the Tree is balanced
+For the purposes of this question, a balanced tree is defined to be a tree such that the heights of the two subtrees of any node never differ by more than one.
+```swift 
+  func isBalanced() -> Bool {
+    if let height = checkHeight(root) {
+      print("The Tree is balanced and his height is = \(height)")
+      return true
+    } else {
+      return false
+    }
+  }
+
+  private func checkHeight(node: TreeNode<T>?) -> Int? {
+    
+    guard let node = node else {
+      return 0
+    }
+    
+    /* Check if left subtree is balanced. */
+    guard let left = checkHeight(node.left) else {
+      return nil
+    }
+    
+    /* Check if rihgt subtree is balanced. */
+    guard let right = checkHeight(node.right) else {
+      return nil
+    }
+    
+    if abs(left - right) > 1 {
+      return nil
+    } else {
+      return max(left, right) + 1
+    }
+  }
+```
+
 Lowest Common Ancestor - LCA without parent pointer
 LCA problem with no parent pointers. Given the root of a tree and pointers to two nodes contained in that tree, return the lowest common ancestor of the two nodes.
 
