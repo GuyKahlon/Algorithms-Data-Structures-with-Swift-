@@ -933,3 +933,42 @@ func isPalindrome(s: String) -> Bool {
   return true
 }
 ```
+
+###Given an Matrix n*n, write a method to rotate the matrix by 90 degrees (in place).<br />
+(You can find the Matrix struct at: https://github.com/mattt/Surge/blob/master/Source/Matrix.swift)
+
+```swift
+func rotateMatrixBy90Degrees(inout m: Matrix<Float>) {
+  
+  assert(m.rows == m.columns, "You can't rotate in place non square matrix")
+  
+  for layer in 0...(m.rows / 2) {
+   
+    let first = layer
+    let last  = m.rows - layer - 1
+    
+    for i in first..<last {
+      
+      let top = (first, first+i)
+      let left = (last-i, first)
+      let bottom = (last, last-i)
+      let right = (first+i, last)
+      
+      //Save top on temp.
+      let tempTop = m[top]
+      
+      //Left->Top
+      m[top] = m[left]
+      
+      //bottom->left
+      m[left] = m[bottom]
+      
+      //right -> Buttom
+      m[bottom] = m[right]
+      
+      //top->right
+      m[right] = tempTop
+    }
+  }
+}
+```
