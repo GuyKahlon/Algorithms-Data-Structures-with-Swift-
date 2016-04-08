@@ -10,7 +10,7 @@ extension Array where Element: Comparable {
   
   private mutating func quickSortHelper(left left: Int, right: Int) {
     
-    if left < right {
+    if left >= right {
       let p = Partition(left: left, right: right)
       quickSortHelper(left: left, right: p-1)
       quickSortHelper(left: p+1, right: right)
