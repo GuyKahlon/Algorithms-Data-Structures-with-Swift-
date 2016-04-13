@@ -345,54 +345,6 @@ func generalizedAbbreviationHelprt(str: String, start: Int, inout sb: String, in
 ```
 
 
-
-
-### Given a sequence of words, print all anagrams together.
-
-```swift
-extension SequenceType where Generator.Element == String {
-  
-  /**
-   Input:
-   ["cat", "dog", "tac", "god", "act", "aaa"]
-   
-   Output:
-   ["cat", "tac", "act"]
-   ["dog", "god"]
-   
-   */
-  func findAllAnagrams() {
-    
-    var dic = [Int:[String]]()
-    
-    for item in self {
-      if var arrayOfWords = dic[item.charactersHashValue] {
-        arrayOfWords.append(item)
-        dic[item.charactersHashValue] = arrayOfWords
-      } else {
-        dic[item.charactersHashValue] = [item]
-      }
-    }
-    
-    for (_, value) in dic {
-      if value.count > 1 {
-        print(value)
-      }
-    }
-  }
-}
-
-extension String {
-  var charactersHashValue: Int {
-    var retVal = -1
-    for char in self.utf8 {
-      retVal += char.hashValue
-    }
-    return retVal
-  }
-}
-```
-  
 ###Given an integer array numbers and you have to return a new counts array, The counts array has the property where counts[i] is the number of smaller elements to the right of nums[i].
  
   Given numbers = [5, 2, 6, 1]
